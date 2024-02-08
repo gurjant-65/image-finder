@@ -39,7 +39,7 @@ const Info = () => {
             className="btn"
             onClick={handleClick}
             style={{
-              opacity: search === "" ? "0.7" : "1",
+              opacity: search === "" || search === "nature" ? "0.7" : "1",
             }}
           >
             <div>
@@ -50,7 +50,7 @@ const Info = () => {
         </div>
       </div>
       <div className="map_div">
-        {data?.length === 0 || data === "nature" ? (
+        {data?.length === 0 ? (
           <h1>No Data Found</h1>
         ) : (
           data.map((item, idx) => {
