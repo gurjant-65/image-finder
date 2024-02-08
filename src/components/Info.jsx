@@ -7,22 +7,36 @@ import { FaDownload } from "react-icons/fa";
 const Info = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("nature");
-
+  const [loading, setLoading] = useState(true);
   const handleChange = (e) => {
     setSearch(e.target.value);
     console.log("value" + search);
   };
 
   const handleClick = () => {
-    getImages(search, 200).then((data) => {
-      setData(data.data.hits);
-    });
+    try {
+      setLoading(true);
+      getImages(search, 200).then((data) => {
+        setData(data.data.hits);
+        setLoading(false);
+      });
+    } catch (error) {
+      console.log(error.message);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    getImages(search, 100).then((data) => {
-      setData(data.data.hits);
-    });
+    try {
+      setLoading(true);
+      getImages(search, 200).then((data) => {
+        setData(data.data.hits);
+        setLoading(false);
+      });
+    } catch (error) {
+      console.log(error.message);
+      setLoading(false);
+    }
   }, []);
 
   const handleDownload = (url, fileName) => {
@@ -37,6 +51,7 @@ const Info = () => {
         URL.revokeObjectURL(blobURL);
       });
   };
+
   return (
     <div style={{}}>
       <div style={{ textAlign: "center" }}>
@@ -64,37 +79,41 @@ const Info = () => {
           </button>
         </div>
       </div>
-      <div className="map_div">
-        {data?.length === 0 ? (
-          <h1>No Data Found</h1>
-        ) : (
-          data.map((item, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <div className="sub-div ">
-                  <div
-                    style={{
-                      position: "relative",
-                      height: "400px",
-                      width: "100%",
-                    }}
-                  >
-                    <img src={item.largeImageURL} alt="" className="image" />
-                    <a
-                      onClick={() =>
-                        handleDownload(item.largeImageURL, `image_${idx}`)
-                      }
-                      className="download-btn"
+      {loading ? (
+        <div className="loader"></div>
+      ) : (
+        <div className="map_div">
+          {data?.length === 0 ? (
+            <h1>No Data Found</h1>
+          ) : (
+            data.map((item, idx) => {
+              return (
+                <React.Fragment key={idx}>
+                  <div className="sub-div ">
+                    <div
+                      style={{
+                        position: "relative",
+                        height: "400px",
+                        width: "100%",
+                      }}
                     >
-                      <FaDownload size={20} />
-                    </a>
+                      <img src={item.largeImageURL} alt="" className="image" />
+                      <a
+                        onClick={() =>
+                          handleDownload(item.largeImageURL, `image_${idx}`)
+                        }
+                        className="download-btn"
+                      >
+                        <FaDownload size={20} />
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </React.Fragment>
-            );
-          })
-        )}
-      </div>
+                </React.Fragment>
+              );
+            })
+          )}
+        </div>
+      )}
     </div>
   );
 };
