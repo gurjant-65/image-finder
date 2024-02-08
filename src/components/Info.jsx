@@ -50,7 +50,7 @@ const Info = () => {
         </div>
       </div>
       <div className="map_div">
-        {data?.length === 0 ? (
+        {data?.length === 0 || data === "nature" ? (
           <h1>No Data Found</h1>
         ) : (
           data.map((item, idx) => {
