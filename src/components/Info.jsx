@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getImages } from "../api/api";
 import { IoIosSearch } from "react-icons/io";
 import { FaDownload } from "react-icons/fa";
+import { IoIosImages } from "react-icons/io";
 
 const Info = () => {
   const [data, setData] = useState([]);
@@ -55,8 +56,19 @@ const Info = () => {
   return (
     <div style={{}}>
       <div style={{ textAlign: "center" }}>
-        <h1 className="heading">Image Finder </h1>
-
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "10px",
+            marginBottom: "15px",
+            marginTop: "15px",
+          }}
+        >
+          <IoIosImages style={{ height: "40px", width: "40px" }} />
+          <h1 className="heading">Image Finder </h1>
+        </div>
         <div className="input_div">
           <input
             type="search"
@@ -93,8 +105,6 @@ const Info = () => {
                     <div
                       style={{
                         position: "relative",
-                        height: "400px",
-                        width: "100%",
                       }}
                     >
                       <img src={item.largeImageURL} alt="" className="image" />

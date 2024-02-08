@@ -37,12 +37,13 @@ body{
 .image{
     height: 100%;
     width: 100%;
+    margin-top: 10px;
     object-fit: cover;
 }
 
 .input_div{
     display: flex;
-    margin-top: 20px;
+    margin-top: 15px;
     justify-content: center;
     align-items: center;
 }
@@ -50,10 +51,7 @@ body{
 .map_div{
     margin-top: 20px;
     margin-inline: 10px;
-    gap: 6px;
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    
+ columns: 3;    
 }
 
 .parent_map_div{
@@ -68,8 +66,7 @@ body{
 
 @media only screen and (max-width: 600px) {
     .map_div{
-        grid-template-columns: repeat(1,1fr);
-        
+columns: 1;        
     }
   }
 
