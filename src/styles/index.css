@@ -72,3 +72,13 @@ body{
         
     }
   }
+
+  .download-btn{
+  position: absolute;
+  z-index: 1;
+  bottom: 0 ;
+  right: 0;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  }

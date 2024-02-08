@@ -2,6 +2,8 @@ import "../styles/index.css";
 import React, { useEffect, useState } from "react";
 import { getImages } from "../api/api";
 import { IoIosSearch } from "react-icons/io";
+import { FaDownload } from "react-icons/fa";
+
 const Info = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("nature");
@@ -12,16 +14,29 @@ const Info = () => {
   };
 
   const handleClick = () => {
-    getImages(search, 100).then((data) => {
+    getImages(search, 200).then((data) => {
       setData(data.data.hits);
     });
   };
 
   useEffect(() => {
-    getImages(search, 30).then((data) => {
+    getImages(search, 100).then((data) => {
       setData(data.data.hits);
     });
   }, []);
+
+  const handleDownload = (url, fileName) => {
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const blobURL = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = blobURL;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(blobURL);
+      });
+  };
   return (
     <div style={{}}>
       <div style={{ textAlign: "center" }}>
@@ -59,11 +74,20 @@ const Info = () => {
                 <div className="sub-div ">
                   <div
                     style={{
+                      position: "relative",
                       height: "400px",
                       width: "100%",
                     }}
                   >
                     <img src={item.largeImageURL} alt="" className="image" />
+                    <a
+                      onClick={() =>
+                        handleDownload(item.largeImageURL, `image_${idx}`)
+                      }
+                      className="download-btn"
+                    >
+                      <FaDownload size={20} />
+                    </a>
                   </div>
                 </div>
               </React.Fragment>
